@@ -1,5 +1,4 @@
 const express = require('express');
-const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,11 +7,12 @@ app.use(express.json());
 
 app.post('/autocomplete/street', async (req, res) => {
   try {
+    const fetch = (await import('node-fetch')).default;
+    
     const response = await fetch('https://themovemarket.com/autocomplete/street', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Add any other headers needed
       },
       body: JSON.stringify(req.body),
     });
@@ -28,3 +28,4 @@ app.post('/autocomplete/street', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
